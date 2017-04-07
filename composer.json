@@ -1,0 +1,42 @@
+{
+  "name": "vopm/omnipay-globalcollect",
+  "type": "library",
+  "description": "GlobaCollect driver for the Omnipay payment processing library",
+  "keywords": [
+    "gateway",
+    "merchant",
+    "omnipay",
+    "pay",
+    "payment",
+    "globalcollect"
+  ],
+  "homepage": "https://github.com/vopm/omnipay-globalcollect",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Yusnel Rojas García",
+      "email": "yusnel.rojas@gmail.com"
+    },
+    {
+      "name": "Yunier Rojas García",
+      "email": "yunier.rojas@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Omnipay\\GlobalCollect\\": "src/"
+    }
+  },
+  "require": {
+    "omnipay/common": "~2.0",
+    "Ingenico-ePayments/connect-sdk-php": "^5.4"
+  },
+  "require-dev": {
+    "omnipay/tests": "~2.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    }
+  }
+}
