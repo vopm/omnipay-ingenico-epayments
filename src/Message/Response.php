@@ -1,337 +1,142 @@
 <?php
 
 /**
- * Stripe Response.
+ * GlobalCollect Response.
  */
-namespace Omnipay\Stripe\Message;
+namespace Omnipay\GlobalCollect\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
- * Stripe Response.
+ * GlobalCollect Response.
  *
- * This is the response class for all Stripe requests.
+ * This is the base response class for all GlobalCollect requests.
  *
- * @see \Omnipay\Stripe\Gateway
+ * @see \Omnipay\GlobalCollect\Gateway
  */
 class Response extends AbstractResponse
 {
+    const STATUS_ACCOUNT_VERIFIED = 'ACCOUNT_VERIFIED';
+    const STATUS_CREATED = 'CREATED';
+    const STATUS_REDIRECTED = 'REDIRECTED';
+    const STATUS_PENDING_PAYMENT = 'PENDING_PAYMENT';
+    const STATUS_PENDING_FRAUD_APPROVAL = 'PENDING_FRAUD_APPROVAL';
+    const STATUS_PENDING_APPROVAL = 'PENDING_APPROVAL';
+    const STATUS_REJECTED = 'REJECTED';
+    const STATUS_AUTHORIZATION_REQUESTED = 'AUTHORIZATION_REQUESTED';
+    const STATUS_CAPTURE_REQUESTED = 'CAPTURE_REQUESTED';
+    const STATUS_CAPTURED = 'CAPTURED';
+    const STATUS_PAID = 'PAID';
+    const STATUS_CANCELLED = 'CANCELLED';
+    const STATUS_REJECTED_CAPTURE = 'REJECTED_CAPTURE';
+    const STATUS_REVERSED = 'REVERSED';
+    const STATUS_CHARGEBACKED = 'CHARGEBACKED';
+    const STATUS_REFUNDED = 'REFUNDED';
+
+
     /**
-     * Request id
+     * Is the response successful?
      *
-     * @var string URL
-     */
-    protected $requestId = null;
-    
-    /**
-     * Is the transaction successful?
-     *
-     * @return bool
+     * @return boolean
      */
     public function isSuccessful()
     {
-        return !isset($this->data['error']);
+        return !isset($this->data['errorId']);
     }
 
-    /**
-     * Get the charge reference from the response of FetchChargeRequest.
-     * 
-     * @deprecated 2.3.3:3.0.0 duplicate of \Omnipay\Stripe\Message\Response::getTransactionReference()
-     * @see \Omnipay\Stripe\Message\Response::getTransactionReference()
-     * @return array|null
-     */
-    public function getChargeReference()
+    public function isPending()
     {
-        if (isset($this->data['object']) && $this->data['object'] == 'charge') {
-            return $this->data['id'];
-        }
-
-        return null;
+        return isset($this->data['status'])?($this->data['status'] == self::STATUS_PENDING_FRAUD_APPROVAL): null;
     }
 
     /**
-     * Get the transaction reference.
+     * Is the response successful?
      *
-     * @return string|null
+     * @return boolean
      */
-    public function getTransactionReference()
+    public function isCancelled()
     {
-        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
-            return $this->data['id'];
-        }
-        if (isset($this->data['error']) && isset($this->data['error']['charge'])) {
-            return $this->data['error']['charge'];
-        }
-
-        return null;
+        return $this->data['status'] == self::STATUS_CANCELLED;
     }
 
-    /**
-     * Get the balance transaction reference.
-     *
-     * @return string|null
-     */
-    public function getBalanceTransactionReference()
+    public function isCancellable()
     {
-        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
-            return $this->data['balance_transaction'];
-        }
-        if (isset($this->data['object']) && 'balance_transaction' === $this->data['object']) {
-            return $this->data['id'];
-        }
-        if (isset($this->data['error']) && isset($this->data['error']['charge'])) {
-            return $this->data['error']['charge'];
-        }
-
-        return null;
+        return isset($this->data['statusOutput'])?$this->data['statusOutput']['isCancellable']: null;
     }
 
-    /**
-     * Get a customer reference, for createCustomer requests.
-     *
-     * @return string|null
-     */
-    public function getCustomerReference()
+    public function isAuthorized()
     {
-        if (isset($this->data['object']) && 'customer' === $this->data['object']) {
-            return $this->data['id'];
-        }
-        if (isset($this->data['object']) && 'card' === $this->data['object']) {
-            if (!empty($this->data['customer'])) {
-                return $this->data['customer'];
-            }
-        }
-
-        return null;
+        return isset($this->data['statusOutput'])?$this->data['statusOutput']['isCancellable']: null;
     }
 
-    /**
-     * Get a card reference, for createCard or createCustomer requests.
-     *
-     * @return string|null
-     */
-    public function getCardReference()
+    public function isRefundable()
     {
-        if (isset($this->data['object']) && 'customer' === $this->data['object']) {
-            
-            if (isset($this->data['default_source']) && !empty($this->data['default_source'])) {
-                return $this->data['default_source'];
-            }
+        return isset($this->data['statusOutput'])?$this->data['statusOutput']['isRefundable']: null;
+    }
 
-            if (isset($this->data['default_card']) && !empty($this->data['default_card'])) {
-                return $this->data['default_card'];
-            }
-            
-            if (!empty($this->data['id'])) {
+    public function getTransactionReference(){
+        if ($this->isSuccessful()){
+            if (isset($this->data['id'])){
                 return $this->data['id'];
-            }
-        }
-        if (isset($this->data['object']) && 'card' === $this->data['object']) {
-            if (!empty($this->data['id'])) {
-                return $this->data['id'];
-            }
-        }
-        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
-            if (! empty($this->data['source'])) {
-                if (! empty($this->data['source']['id'])) {
-                    return $this->data['source']['id'];
-                }
+            }elseif (isset($this->data['payment']) && isset($this->data['payment']['id'])){
+                return $this->data['payment']['id'];
             }
         }
 
         return null;
     }
 
-    /**
-     * Get a token, for createCard requests.
-     *
-     * @return string|null
-     */
-    public function getToken()
-    {
-        if (isset($this->data['object']) && 'token' === $this->data['object']) {
-            return $this->data['id'];
+
+    public function getToken(){
+        if (isset($this->data['token'])){
+            return $this->data['token'];
+        }
+
+        return null;
+    }
+
+    public function isNewToken(){
+        if (isset($this->data['isNewToken'])){
+            return $this->data['isNewToken'];
         }
 
         return null;
     }
 
     /**
-     * Get the card data from the response.
-     *
-     * @return array|null
+     * @return ErrorItem[]
      */
-    public function getCard()
-    {
-        if (isset($this->data['card'])) {
-            return $this->data['card'];
+    public function getErrors(){
+        $errors = [];
+        foreach ($this->data['errors'] as $e){
+            $errors[] = ErrorItem::fromError($e);
         }
 
-        return null;
+        return $errors;
     }
 
     /**
-     * Get the card data from the response of purchaseRequest.
-     *
-     * @return array|null
+     * @return mixed|null|ErrorItem
      */
-    public function getSource()
-    {
-        if (isset($this->data['source']) && $this->data['source']['object'] == 'card') {
-            return $this->data['source'];
-        }
-
-        return null;
+    public function getError(){
+        return (!$this->isSuccessful() && ($errors = $this->getErrors()))? array_shift($errors): null;
     }
 
-    /**
-     * Get the subscription reference from the response of CreateSubscriptionRequest.
-     *
-     * @return array|null
-     */
-    public function getSubscriptionReference()
-    {
-        if (isset($this->data['object']) && $this->data['object'] == 'subscription') {
-            return $this->data['id'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the event reference from the response of FetchEventRequest.
-     *
-     * @return array|null
-     */
-    public function getEventReference()
-    {
-        if (isset($this->data['object']) && $this->data['object'] == 'event') {
-            return $this->data['id'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the invoice reference from the response of FetchInvoiceRequest.
-     *
-     * @return array|null
-     */
-    public function getInvoiceReference()
-    {
-        if (isset($this->data['object']) && $this->data['object'] == 'invoice') {
-            return $this->data['id'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the list object from a result
-     *
-     * @return array|null
-     */
-    public function getList()
-    {
-        if (isset($this->data['object']) && $this->data['object'] == 'list') {
-            return $this->data['data'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the subscription plan from the response of CreateSubscriptionRequest.
-     *
-     * @return array|null
-     */
-    public function getPlan()
-    {
-        if (isset($this->data['plan'])) {
-            return $this->data['plan'];
-        } elseif (array_key_exists('object', $this->data) && $this->data['object'] == 'plan') {
-            return $this->data;
-        }
-
-        return null;
-    }
-
-    /**
-     * Get plan id
-     *
-     * @return string|null
-     */
-    public function getPlanId()
-    {
-        $plan = $this->getPlan();
-        if ($plan && array_key_exists('id', $plan)) {
-            return $plan['id'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get invoice-item reference
-     *
-     * @return string|null
-     */
-    public function getInvoiceItemReference()
-    {
-        if (isset($this->data['object']) && $this->data['object'] == 'invoiceitem') {
-            return $this->data['id'];
-        }
-
-        return null;
-    }
-
-    /**
-     * Get the error message from the response.
-     *
-     * Returns null if the request was successful.
-     *
-     * @return string|null
-     */
     public function getMessage()
     {
-        if (!$this->isSuccessful() && isset($this->data['error']) && isset($this->data['error']['message'])) {
-            return $this->data['error']['message'];
+        if (!$this->isSuccessful() && ($error = $this->getError())) {
+            return $error->message;
         }
 
         return null;
     }
 
-    /**
-     * Get the error message from the response.
-     *
-     * Returns null if the request was successful.
-     *
-     * @return string|null
-     */
     public function getCode()
     {
-        if (!$this->isSuccessful() && isset($this->data['error']) && isset($this->data['error']['code'])) {
-            return $this->data['error']['code'];
+        if (!$this->isSuccessful() && ($error = $this->getError())) {
+            return $error->code;
         }
 
         return null;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getRequestId()
-    {
-        return $this->requestId;
-    }
-
-    /**
-     * Set request id
-     *
-     * @return AbstractRequest provides a fluent interface.
-     */
-    public function setRequestId($requestId)
-    {
-        $this->requestId = $requestId;
     }
 }

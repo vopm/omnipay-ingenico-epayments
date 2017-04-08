@@ -1,0 +1,20 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:22:58 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: application/json
+Content-Length: 638
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+{
+  "errorId": "15eabcd5-30b3-479b-ae03-67bb351c07e6-00000092",
+  "errors": [
+    {
+      "code": "20000000",
+      "propertyName": "directDebitPaymentMethodSpecificInput.bankAccountBban.accountNumber",
+      "message": "PARAMETER_NOT_FOUND_IN_REQUEST"
+    }
+  ]
+}

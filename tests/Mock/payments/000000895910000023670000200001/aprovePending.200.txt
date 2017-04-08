@@ -1,0 +1,47 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:22:58 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: application/json
+Content-Length: 638
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+{
+  "id" : "000000873100000004150000200001",
+  "paymentOutput" : {
+    "amountOfMoney" : {
+      "amount" : 16523,
+      "currencyCode" : "EUR"
+    },
+    "references" : {
+       "paymentReference" : "0"
+    },
+    "paymentMethod" : "card",
+    "cardPaymentMethodSpecificOutput": {
+      "paymentProductId" : 1,
+      "card" : {
+        "cardNumber" : "************1211",
+        "expiryDate" : "1220"
+      },
+      "fraudResults" : {
+        "avsResult" : "0",
+        "cvvResult" : "0",
+        "fraudServiceResult" : "challenged",
+        "retailDecisions" : {
+          "fraudCode" : "0330"
+        }
+      }
+    }
+  },
+  "status" : "PENDING_APPROVAL",
+     "statusOutput" : {
+        "isCancellable" : true,
+        "statusCategory" : "PENDING_MERCHANT",
+        "statusCode" : 600,
+        "statusCodeChangeDateTime" : "20170408200847",
+        "isAuthorized" : true,
+        "isRefundable" : false
+     }
+}

@@ -1,0 +1,47 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:22:58 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: application/json
+Content-Length: 638
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+{
+   "id" : "000000895910000023670000200001",
+   "paymentOutput" : {
+      "amountOfMoney" : {
+         "amount" : 82800,
+         "currencyCode" : "DOP"
+      },
+      "references" : {
+         "merchantOrderId" : 146963,
+         "merchantReference" : "WO46199-f5f59512-aad3-1c44-298",
+         "paymentReference" : "0"
+      },
+      "paymentMethod" : "card",
+      "cardPaymentMethodSpecificOutput" : {
+         "paymentProductId" : 1,
+         "authorisationCode" : "654321",
+         "fraudResults" : {
+            "fraudServiceResult" : "no-advice",
+            "avsResult" : "0",
+            "cvvResult" : "0"
+         },
+         "card" : {
+            "cardNumber" : "471661******3729",
+            "expiryDate" : "0425"
+         }
+      }
+   },
+   "status" : "PENDING_APPROVAL",
+   "statusOutput" : {
+      "isCancellable" : true,
+      "statusCategory" : "PENDING_MERCHANT",
+      "statusCode" : 600,
+      "statusCodeChangeDateTime" : "20170408200847",
+      "isAuthorized" : true,
+      "isRefundable" : false
+   }
+}

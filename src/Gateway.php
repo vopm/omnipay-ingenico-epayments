@@ -1,8 +1,5 @@
 <?php
 
-/**
- * GlobalCollect Gateway.
- */
 namespace Omnipay\GlobalCollect;
 
 use Omnipay\Common\AbstractGateway;
@@ -13,7 +10,7 @@ use Omnipay\Common\AbstractGateway;
  *
  * @see \Omnipay\Common\AbstractGateway
  * @see \Omnipay\GlobalCollect\Message\AbstractRequest
- * @link https://stripe.com/docs/api
+ * @link https://developer.globalcollect.com/documentation/api/server/
  */
 class Gateway extends AbstractGateway
 {
@@ -30,12 +27,68 @@ class Gateway extends AbstractGateway
      */
     public function getDefaultParameters()
     {
-        return array(
-	        'testMode' => false,
-	        'apiKeyId' => '',
-            'apiSecret' => '',
-            'integrator' => '',
-        );
+        return [
+            'testMode'      => false,
+            'apiMerchantId' => '',
+            'apiKeyId'      => '',
+            'apiSecret'     => '',
+            'apiVersion'    => 'v1',
+            'integrator'    => null,
+        ];
+    }
+
+
+
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentAuthorizeRequest', $parameters);
+    }
+
+    public function capture(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureRequest', $parameters);
+    }
+
+    public function captureCancel(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureCancelRequest', $parameters);
+    }
+
+    public function fetchTransaction(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest', $parameters);
+    }
+
+    public function tokenize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentTokenizeRequest', $parameters);
+    }
+
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentVoidRequest', $parameters);
+    }
+
+    public function refund(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentRefundRequest', $parameters);
+    }
+
+    public function approvePending(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentPendingApproveRequest', $parameters);
+    }
+
+
+    /** parameters */
+    public function getApiMerchantId()
+    {
+        return $this->getParameter('apiMerchantId');
+    }
+
+    public function setApiMerchantId($value)
+    {
+        return $this->setParameter('apiMerchantId', $value);
     }
 
     /**
@@ -60,34 +113,33 @@ class Gateway extends AbstractGateway
         return $this->setParameter('apiKeyId', $value);
     }
 
-	public function getApiSecret(){
-		return $this->getParameter('apiSecret');
-	}
+    public function getApiSecret()
+    {
+        return $this->getParameter('apiSecret');
+    }
 
-	public function setApiSecret($value){
-		return $this->setParameter('apiSecret', $value);
-	}
+    public function setApiSecret($value)
+    {
+        return $this->setParameter('apiSecret', $value);
+    }
 
-	public function getIntegrator(){
-		return $this->getParameter('integrator');
-	}
+    public function getIntegrator()
+    {
+        return $this->getParameter('integrator');
+    }
 
-	public function setIntegrator($value){
-		return $this->setParameter('integrator', $value);
-	}
+    public function setIntegrator($value)
+    {
+        return $this->setParameter('integrator', $value);
+    }
 
+    public function getApiVersion()
+    {
+        return $this->getParameter('apiVersion');
+    }
 
-    /**
-     * Authorize Request.
-     *
-     * @param array $parameters
-     *
-     * @return \Omnipay\GlobalCollect\Message\AuthorizeRequest
-     */
-//    public function authorize(array $parameters = array())
-//    {
-//        return $this->createRequest('\Omnipay\GlobalCollect\Message\AuthorizeRequest', $parameters);
-//    }
-
-
+    public function setApiVersion($value)
+    {
+        return $this->setParameter('apiVersion', $value);
+    }
 }

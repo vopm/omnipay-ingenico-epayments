@@ -28,11 +28,14 @@
     }
   },
   "require": {
+    "omnipay/omnipay": "~2.0",
     "omnipay/common": "~2.0",
     "Ingenico-ePayments/connect-sdk-php": "^5.4"
   },
   "require-dev": {
-    "omnipay/tests": "~2.0"
+    "omnipay/tests": "~2.0",
+    "mockery/mockery": "^0.9.9",
+    "dabsquared/omnipay-cybersource-soap": "*"
   },
   "extra": {
     "branch-alias": {

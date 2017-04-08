@@ -1,0 +1,108 @@
+HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 16 Feb 2013 04:22:58 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Type: application/json
+Content-Length: 638
+Cache-Control: private, must-revalidate, max-age=0
+Expires: Tue, 01 Jan 1980 00:00:00 GMT
+
+{
+  "cardPaymentMethodSpecificInput": {
+    "paymentProductId": 1,
+    "skipAuthentication": false,
+    "card": {
+      "cvv": "123",
+      "cardholderName": "Wile E. Coyote",
+      "cardNumber": "4567350000427977",
+      "expiryDate": "1220"
+    }
+  },
+  "order": {
+    "amountOfMoney": {
+      "currencyCode": "EUR",
+      "amount": 2980
+    },
+    "customer": {
+      "shippingAddress": {
+        "additionalInfo": "Suite II",
+        "name": {
+          "surname": "Runner",
+          "firstName": "Road",
+          "title": "Miss"
+        },
+        "zip": "84536",
+        "city": "Monument Valley",
+        "countryCode": "US",
+        "state": "Utah",
+        "street": "Desertroad",
+        "houseNumber": "1"
+      },
+      "locale": "en_US",
+      "vatNumber": "1234AB5678CD",
+      "contactDetails": {
+        "phoneNumber": "+1234567890",
+        "emailAddress": "wile.e.coyote@acmelabs.com",
+        "emailMessageType": "html",
+        "faxNumber": "+1234567891"
+      },
+      "billingAddress": {
+        "additionalInfo": "b",
+        "countryCode": "US",
+        "zip": "84536",
+        "city": "Monument Valley",
+        "state": "Utah",
+        "street": "Desertroad",
+        "houseNumber": "13"
+      },
+      "personalInformation": {
+        "gender": "M",
+        "name": {
+          "surnamePrefix": "E.",
+          "surname": "Coyote",
+          "firstName": "Wile",
+          "title": "Mr."
+        },
+        "dateOfBirth": "19490917"
+      },
+      "companyInformation": {
+        "name": "Acme Labs"
+      },
+      "merchantCustomerId": "1234"
+    },
+    "references": {
+      "merchantOrderId": 123456,
+      "descriptor": "Fast and Furry-ous",
+      "invoiceData": {
+        "invoiceNumber": "000000123",
+        "invoiceDate": "20140306191500"
+      },
+      "merchantReference": "AcmeOrder0001"
+    },
+    "items": [
+      {
+        "amountOfMoney": {
+          "currencyCode": "EUR",
+          "amount": 2500
+        },
+        "invoiceData": {
+          "nrOfItems": "1",
+          "pricePerItem": 2500,
+          "description": "ACME Super Outfit"
+        }
+      },
+      {
+        "amountOfMoney": {
+          "currencyCode": "EUR",
+          "amount": 480
+        },
+        "invoiceData": {
+          "nrOfItems": "12",
+          "pricePerItem": 40,
+          "description": "Aspirin"
+        }
+      }
+    ]
+  }
+}
