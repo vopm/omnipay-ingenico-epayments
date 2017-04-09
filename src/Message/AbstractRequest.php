@@ -98,14 +98,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('apiVersion', $value);
     }
 
-    public function getIntegrator()
+    public function getApiIntegrator()
     {
-        return $this->getParameter('integrator');
+        return $this->getParameter('apiIntegrator');
     }
 
-    public function setIntegrator($value)
+    public function setApiIntegrator($value)
     {
-        return $this->setParameter('integrator', $value);
+        return $this->setParameter('apiIntegrator', $value);
     }
 
     public function getLocale()
@@ -307,7 +307,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $serverMetaInfo->sdkIdentifier = 'PHPServerSDK/v' . static::SDK_VERSION;
         $serverMetaInfo->sdkCreator = 'Ingenico';
 
-        $integrator = $this->getIntegrator();
+        $integrator = $this->getApiIntegrator();
         if (!is_null($integrator)) {
             $serverMetaInfo->integrator = $integrator;
         }

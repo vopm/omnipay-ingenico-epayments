@@ -33,7 +33,7 @@ class Gateway extends AbstractGateway
             'apiKeyId'      => '',
             'apiSecret'     => '',
             'apiVersion'    => 'v1',
-            'integrator'    => null,
+            'apiIntegrator'    => null,
         ];
     }
 
@@ -123,14 +123,14 @@ class Gateway extends AbstractGateway
         return $this->setParameter('apiSecret', $value);
     }
 
-    public function getIntegrator()
+    public function getApiIntegrator()
     {
-        return $this->getParameter('integrator');
+        return $this->getParameter('apiIntegrator');
     }
 
-    public function setIntegrator($value)
+    public function setApiIntegrator($value)
     {
-        return $this->setParameter('integrator', $value);
+        return $this->setParameter('apiIntegrator', $value);
     }
 
     public function getApiVersion()
