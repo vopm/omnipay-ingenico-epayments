@@ -2,7 +2,6 @@
 
 namespace Omnipay\GlobalCollect\Message\Payments;
 
-
 use Omnipay\GlobalCollect\Message\AbstractRequest;
 
 class PaymentAuthorizeRequest extends AbstractRequest
@@ -20,21 +19,21 @@ class PaymentAuthorizeRequest extends AbstractRequest
     public function getData()
     {
         $request = [
-            'order'=>$this->createOrder()
+            'order' => $this->createOrder()
         ];
 
         $request['fraudFields'] = $this->createFraudFields();
 
-        if ($this->getToken()){
+        if ($this->getToken()) {
             $request['cardPaymentMethodSpecificInput'] = [
-                'card'=> new \stdClass(),
-                'isRecurring' => true,
+                'card'                              => new \stdClass(),
+                'isRecurring'                       => true,
                 'recurringPaymentSequenceIndicator' => "recurring",
-                'token' => $this->getToken(),
+                'token'                             => $this->getToken(),
             ];
-        }else{
+        } else {
             $request['cardPaymentMethodSpecificInput'] = [
-                'card'=> new \stdClass()
+                'card' => new \stdClass()
             ];
         }
 
@@ -48,25 +47,25 @@ class PaymentAuthorizeRequest extends AbstractRequest
         $order = $this->getOrder();
 
         $customer = [
-            'billingAddress'=>[
-                'city' => $card->getBillingCity(),
+            'billingAddress'      => [
+                'city'        => $card->getBillingCity(),
                 'countryCode' => $card->getBillingCountry(),
-                'state' => $card->getBillingState(),
-                'street' => $card->getBillingAddress1(),
+                'state'       => $card->getBillingState(),
+                'street'      => $card->getBillingAddress1(),
             ],
-            'contactDetails'=>[
-                'phoneNumber'=>$card->getPhone(),
-                'emailAddress'=>$card->getEmail(),
-                'emailMessageType'=>'html',
+            'contactDetails'      => [
+                'phoneNumber'      => $card->getPhone(),
+                'emailAddress'     => $card->getEmail(),
+                'emailMessageType' => 'html',
             ],
-            'personalInformation'=>[
-                'name'=>[
-                    'firstName'=>$card->getFirstName(),
-                    'surname'=>$card->getLastName(),
+            'personalInformation' => [
+                'name' => [
+                    'firstName' => $card->getFirstName(),
+                    'surname'   => $card->getLastName(),
                 ]
             ],
-            "locale"=> $this->getLocale(),
-            "merchantCustomerId"=> $order['customerId']
+            "locale"              => $this->getLocale(),
+            "merchantCustomerId"  => $order['customerId']
         ];
 
         return $customer;
@@ -75,15 +74,14 @@ class PaymentAuthorizeRequest extends AbstractRequest
     protected function createOrder()
     {
         $order = [
-            'amountOfMoney'=>$this->getAmountOfMoney(),
-            'customer' => $this->createCustomer(),
-            'references' => $this->createReferences(),
+            'amountOfMoney' => $this->getAmountOfMoney(),
+            'customer'      => $this->createCustomer(),
+            'references'    => $this->createReferences(),
         ];
 
         return $order;
 
     }
-
 
 
     protected function createReferences()
@@ -92,9 +90,9 @@ class PaymentAuthorizeRequest extends AbstractRequest
 
         $order = $this->getOrder();
 
-        $value['descriptor'] = $order['descriptor'];
+        $value['descriptor'] = $this->getDescription();
         $value['merchantOrderId'] = $order['orderId'];
-        $value['merchantReference'] = $order['merchantReference'];
+        $value['merchantReference'] = $this->getTransactionId();
 
         return $value;
     }
@@ -102,24 +100,24 @@ class PaymentAuthorizeRequest extends AbstractRequest
     protected function createFraudFields()
     {
         $value = [
-            'customerIpAddress'=>$this->getClientIp(),
-            'userData'=>[
-                    0 =>'',
-                    1 =>'',
-                    2 =>'',
-                    3 =>'',
-                    4 =>'',
-                    5 =>'',
-                    6 =>'',
-                    7 =>'',
-                    8 =>'',
-                    9 => 0,
-                    10 =>'',
-                    11 =>'',
-                    12 =>'',
-                    13 =>'',
-                    14 => 'WO',
-                    15 => ''
+            'customerIpAddress' => $this->getClientIp(),
+            'userData'          => [
+                0  => '',
+                1  => '',
+                2  => '',
+                3  => '',
+                4  => '',
+                5  => '',
+                6  => '',
+                7  => '',
+                8  => '',
+                9  => '',
+                10 => '',
+                11 => '',
+                12 => '',
+                13 => '',
+                14 => '',
+                15 => ''
             ]
         ];
 
