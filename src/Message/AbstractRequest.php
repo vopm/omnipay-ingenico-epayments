@@ -53,7 +53,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function buildUrl($path, $context = array())
     {
-        return strtr('/{apiVersion}/{merchantId}', array('{apiVersion}' => $this->getApiVersion(), '{merchantId}' => $this->getApiMerchantId())) . strtr($path, $context);
+        return strtr('/{apiVersion}/{merchantId}', array(
+            '{apiVersion}' => $this->getApiVersion(),
+            '{merchantId}' => $this->getApiMerchantId()
+            )) . strtr($path, $context);
     }
 
     public function getApiMerchantId()
@@ -369,6 +372,4 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
         return $signData;
     }
-
-
 }

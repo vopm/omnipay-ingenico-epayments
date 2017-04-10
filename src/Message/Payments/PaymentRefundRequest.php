@@ -8,7 +8,9 @@ class PaymentRefundRequest extends AbstractPaymentReferenceRequest
 
     public function getEndPoint()
     {
-        return $this->buildUrl('/payments/{paymentId}/refund', array('{paymentId}' => $this->getTransactionReference()));
+        return $this->buildUrl('/payments/{paymentId}/refund', array(
+            '{paymentId}' => $this->getTransactionReference()
+        ));
     }
 
     public function getData()

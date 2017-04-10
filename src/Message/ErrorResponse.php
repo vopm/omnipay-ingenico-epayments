@@ -20,8 +20,8 @@ class ErrorResponse extends AbstractResponse
     public function getErrors()
     {
         $errors = array();
-        foreach ($this->data['errors'] as $e)
-        {
+
+        foreach ($this->data['errors'] as $e) {
             $errors[] = ErrorItem::fromError($e);
         }
 

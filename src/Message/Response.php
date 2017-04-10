@@ -77,13 +77,10 @@ class Response extends AbstractResponse
 
     public function getTransactionReference()
     {
-        if ($this->isSuccessful())
-        {
-            if (isset($this->data['id']))
-            {
+        if ($this->isSuccessful()) {
+            if (isset($this->data['id'])) {
                 return $this->data['id'];
-            } elseif (isset($this->data['payment']) && isset($this->data['payment']['id']))
-            {
+            } elseif (isset($this->data['payment']) && isset($this->data['payment']['id'])) {
                 return $this->data['payment']['id'];
             }
         }
@@ -94,8 +91,7 @@ class Response extends AbstractResponse
 
     public function getToken()
     {
-        if (isset($this->data['token']))
-        {
+        if (isset($this->data['token'])) {
             return $this->data['token'];
         }
 
@@ -104,8 +100,7 @@ class Response extends AbstractResponse
 
     public function isNewToken()
     {
-        if (isset($this->data['isNewToken']))
-        {
+        if (isset($this->data['isNewToken'])) {
             return $this->data['isNewToken'];
         }
 
@@ -118,8 +113,7 @@ class Response extends AbstractResponse
     public function getErrors()
     {
         $errors = array();
-        foreach ($this->data['errors'] as $e)
-        {
+        foreach ($this->data['errors'] as $e) {
             $errors[] = ErrorItem::fromError($e);
         }
 
@@ -136,8 +130,7 @@ class Response extends AbstractResponse
 
     public function getMessage()
     {
-        if (!$this->isSuccessful() && ($error = $this->getError()))
-        {
+        if (!$this->isSuccessful() && ($error = $this->getError())) {
             return $error->message;
         }
 
@@ -146,8 +139,7 @@ class Response extends AbstractResponse
 
     public function getCode()
     {
-        if (!$this->isSuccessful() && ($error = $this->getError()))
-        {
+        if (!$this->isSuccessful() && ($error = $this->getError())) {
             return $error->code;
         }
 
