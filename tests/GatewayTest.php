@@ -16,10 +16,10 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
 
         $this->gateway->setTestMode(true);
-        $this->gateway->setApiIntegrator(getenv('GC_API_INTEGRATOR'));
-        $this->gateway->setApiKeyId(getenv('GC_API_KEY'));
-        $this->gateway->setApiMerchantId(getenv('GC_MERCHANT'));
-        $this->gateway->setApiSecret(getenv('GC_API_SECRET'));
+        $this->gateway->setApiIntegrator(getenv('GC_API_INTEGRATOR') ? getenv('GC_API_INTEGRATOR') : '');
+        $this->gateway->setApiKeyId(getenv('GC_API_KEY') ? getenv('GC_API_KEY') : '');
+        $this->gateway->setApiMerchantId(getenv('GC_MERCHANT') ? getenv('GC_MERCHANT') : '');
+        $this->gateway->setApiSecret(getenv('GC_API_SECRET') ? getenv('GC_API_SECRET') : '');
     }
 
     public function testRetrieve()
