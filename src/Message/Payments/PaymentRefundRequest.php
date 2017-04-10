@@ -8,16 +8,15 @@ class PaymentRefundRequest extends AbstractPaymentReferenceRequest
 
     public function getEndPoint()
     {
-        return $this->buildUrl('/payments/{paymentId}/refund', array('{paymentId}'=>$this->getTransactionReference()));
+        return $this->buildUrl('/payments/{paymentId}/refund', array('{paymentId}' => $this->getTransactionReference()));
     }
 
     public function getData()
     {
         $request = array(
-            'amountOfMoney'=>$this->getAmountOfMoney(),
-            'customer'=>$this->createCustomer(),
+            'amountOfMoney' => $this->getAmountOfMoney(),
+            'customer'      => $this->createCustomer(),
         );
-
 
 
         return $request;
@@ -28,20 +27,20 @@ class PaymentRefundRequest extends AbstractPaymentReferenceRequest
         $card = $this->getCard();
 
         $customer = array(
-            'address'=>array(
-                'name'=>array(
-                    'firstName'=>$card->getFirstName(),
-                    'surname'=>$card->getLastName(),
+            'address'        => array(
+                'name'        => array(
+                    'firstName' => $card->getFirstName(),
+                    'surname'   => $card->getLastName(),
                 ),
-                'city' => $card->getBillingCity(),
+                'city'        => $card->getBillingCity(),
                 'countryCode' => $card->getBillingCountry(),
-                'state' => $card->getBillingState(),
-                'street' => $card->getBillingAddress1(),
+                'state'       => $card->getBillingState(),
+                'street'      => $card->getBillingAddress1(),
             ),
-            'contactDetails'=>array(
-                'phoneNumber'=>$card->getPhone(),
-                'emailAddress'=>$card->getEmail(),
-                'emailMessageType'=>'html',
+            'contactDetails' => array(
+                'phoneNumber'      => $card->getPhone(),
+                'emailAddress'     => $card->getEmail(),
+                'emailMessageType' => 'html',
             )
         );
 

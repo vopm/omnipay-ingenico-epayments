@@ -24,14 +24,16 @@ class PaymentAuthorizeRequest extends AbstractRequest
 
         $request['fraudFields'] = $this->createFraudFields();
 
-        if ($this->getToken()) {
+        if ($this->getToken())
+        {
             $request['cardPaymentMethodSpecificInput'] = array(
                 'card'                              => new \stdClass(),
                 'isRecurring'                       => true,
                 'recurringPaymentSequenceIndicator' => "recurring",
                 'token'                             => $this->getToken(),
             );
-        } else {
+        } else
+        {
             $request['cardPaymentMethodSpecificInput'] = array(
                 'card' => new \stdClass()
             );

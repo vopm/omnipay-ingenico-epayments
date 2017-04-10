@@ -17,9 +17,11 @@ class ErrorResponse extends AbstractResponse
     /**
      * @return ErrorItem[]
      */
-    public function getErrors(){
-        $errors = [];
-        foreach ($this->data['errors'] as $e){
+    public function getErrors()
+    {
+        $errors = array();
+        foreach ($this->data['errors'] as $e)
+        {
             $errors[] = ErrorItem::fromError($e);
         }
 
@@ -35,7 +37,8 @@ class ErrorResponse extends AbstractResponse
     /**
      * @return mixed|null|ErrorItem
      */
-    public function getError(){
-        return ($errors = $this->getErrors())? array_shift($errors): null;
+    public function getError()
+    {
+        return ($errors = $this->getErrors()) ? array_shift($errors) : null;
     }
 }

@@ -3,6 +3,7 @@
 /**
  * GlobalCollect Response.
  */
+
 namespace Omnipay\GlobalCollect\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
@@ -46,7 +47,7 @@ class Response extends AbstractResponse
 
     public function isPending()
     {
-        return isset($this->data['status'])?($this->data['status'] == self::STATUS_PENDING_FRAUD_APPROVAL): null;
+        return isset($this->data['status']) ? ($this->data['status'] == self::STATUS_PENDING_FRAUD_APPROVAL) : null;
     }
 
     /**
@@ -61,24 +62,28 @@ class Response extends AbstractResponse
 
     public function isCancellable()
     {
-        return isset($this->data['statusOutput'])?$this->data['statusOutput']['isCancellable']: null;
+        return isset($this->data['statusOutput']) ? $this->data['statusOutput']['isCancellable'] : null;
     }
 
     public function isAuthorized()
     {
-        return isset($this->data['statusOutput'])?$this->data['statusOutput']['isCancellable']: null;
+        return isset($this->data['statusOutput']) ? $this->data['statusOutput']['isCancellable'] : null;
     }
 
     public function isRefundable()
     {
-        return isset($this->data['statusOutput'])?$this->data['statusOutput']['isRefundable']: null;
+        return isset($this->data['statusOutput']) ? $this->data['statusOutput']['isRefundable'] : null;
     }
 
-    public function getTransactionReference(){
-        if ($this->isSuccessful()){
-            if (isset($this->data['id'])){
+    public function getTransactionReference()
+    {
+        if ($this->isSuccessful())
+        {
+            if (isset($this->data['id']))
+            {
                 return $this->data['id'];
-            }elseif (isset($this->data['payment']) && isset($this->data['payment']['id'])){
+            } elseif (isset($this->data['payment']) && isset($this->data['payment']['id']))
+            {
                 return $this->data['payment']['id'];
             }
         }
@@ -87,16 +92,20 @@ class Response extends AbstractResponse
     }
 
 
-    public function getToken(){
-        if (isset($this->data['token'])){
+    public function getToken()
+    {
+        if (isset($this->data['token']))
+        {
             return $this->data['token'];
         }
 
         return null;
     }
 
-    public function isNewToken(){
-        if (isset($this->data['isNewToken'])){
+    public function isNewToken()
+    {
+        if (isset($this->data['isNewToken']))
+        {
             return $this->data['isNewToken'];
         }
 
@@ -106,9 +115,11 @@ class Response extends AbstractResponse
     /**
      * @return ErrorItem[]
      */
-    public function getErrors(){
+    public function getErrors()
+    {
         $errors = array();
-        foreach ($this->data['errors'] as $e){
+        foreach ($this->data['errors'] as $e)
+        {
             $errors[] = ErrorItem::fromError($e);
         }
 
@@ -118,13 +129,15 @@ class Response extends AbstractResponse
     /**
      * @return mixed|null|ErrorItem
      */
-    public function getError(){
-        return (!$this->isSuccessful() && ($errors = $this->getErrors()))? array_shift($errors): null;
+    public function getError()
+    {
+        return (!$this->isSuccessful() && ($errors = $this->getErrors())) ? array_shift($errors) : null;
     }
 
     public function getMessage()
     {
-        if (!$this->isSuccessful() && ($error = $this->getError())) {
+        if (!$this->isSuccessful() && ($error = $this->getError()))
+        {
             return $error->message;
         }
 
@@ -133,7 +146,8 @@ class Response extends AbstractResponse
 
     public function getCode()
     {
-        if (!$this->isSuccessful() && ($error = $this->getError())) {
+        if (!$this->isSuccessful() && ($error = $this->getError()))
+        {
             return $error->code;
         }
 

@@ -131,9 +131,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return new \stdClass();
     }
 
-    protected function getAmountOfMoney(){
+    protected function getAmountOfMoney()
+    {
         return array(
-            'amount' => $this->getAmountInteger(),
+            'amount'       => $this->getAmountInteger(),
             'currencyCode' => $this->getCurrency(),
         );
     }
@@ -211,13 +212,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected function createRequest($method, $uri, $data = null, $headers = array())
     {
-        $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event) {
+        $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event)
+        {
             /**
              * @var \Guzzle\Http\Message\Response $response
              */
             $response = $event['response'];
 
-            if ($response->isError()) {
+            if ($response->isError())
+            {
                 $event->stopPropagation();
             }
         });
@@ -243,21 +246,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $response = null;
 
-        foreach ($this->responseCodeClassMap as $code => $className) {
-            if (strcmp($httpResponse->getStatusCode(), $code) == 0) {
+        foreach ($this->responseCodeClassMap as $code => $className)
+        {
+            if (strcmp($httpResponse->getStatusCode(), $code) == 0)
+            {
                 $response = new $className($this, $httpResponse->json());
             }
         }
 
-        if (!$response && $this->defaultResponseClass) {
+        if (!$response && $this->defaultResponseClass)
+        {
             $response = new $this->defaultResponseClass($this, $httpResponse->json());
         }
 
-        if (!$response && $this->defaultErrorResponseClass) {
+        if (!$response && $this->defaultErrorResponseClass)
+        {
             $response = new $this->defaultErrorResponseClass($this, $httpResponse->json());
         }
 
-        if (!$response) {
+        if (!$response)
+        {
             throw new InvalidResponseException();
         }
 
@@ -275,11 +283,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $requestHeaders = array();
         $requestHeaders['Content-Type'] = $contentType;
         $requestHeaders['Date'] = $rfc2616Date;
-        if ($this->getClientMetaInfo()) {
+        if ($this->getClientMetaInfo())
+        {
             $requestHeaders['X-GCS-ClientMetaInfo'] = $this->getClientMetaInfo();
         }
         $requestHeaders['X-GCS-ServerMetaInfo'] = $this->getServerMetaInfoValue();
-        if (strlen($this->getIdempotenceKey()) > 0) {
+        if (strlen($this->getIdempotenceKey()) > 0)
+        {
             $requestHeaders['X-GCS-Idempotence-Key'] = $this->getIdempotenceKey();
         }
         $requestHeaders['Authorization'] = $this->getAuthorizationHeaderValue($requestHeaders);
@@ -306,7 +316,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $serverMetaInfo->sdkCreator = 'Ingenico';
 
         $integrator = $this->getApiIntegrator();
-        if (!is_null($integrator)) {
+        if (!is_null($integrator))
+        {
             $serverMetaInfo->integrator = $integrator;
         }
 
@@ -342,24 +353,31 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function getSignData($requestHeaders)
     {
         $signData = $this->getHttpMethod() . "\n";
-        if (isset($requestHeaders['Content-Type'])) {
+        if (isset($requestHeaders['Content-Type']))
+        {
             $signData .= $requestHeaders['Content-Type'] . "\n";
-        } else {
+        } else
+        {
             $signData .= "\n";
         }
-        if (isset($requestHeaders['Date'])) {
+        if (isset($requestHeaders['Date']))
+        {
             $signData .= $requestHeaders['Date'] . "\n";
-        } else {
+        } else
+        {
             $signData .= "\n";
         }
         $gcsHeaders = array();
-        foreach ($requestHeaders as $headerKey => $headerValue) {
-            if (preg_match('/X-GCS/i', $headerKey)) {
+        foreach ($requestHeaders as $headerKey => $headerValue)
+        {
+            if (preg_match('/X-GCS/i', $headerKey))
+            {
                 $gcsHeaders[$headerKey] = $headerValue;
             }
         }
         ksort($gcsHeaders);
-        foreach ($gcsHeaders as $gcsHeaderKey => $gcsHeaderValue) {
+        foreach ($gcsHeaders as $gcsHeaderKey => $gcsHeaderValue)
+        {
             $gcsEncodedHeaderValue = trim(preg_replace('/\r?\n[\h]*/', ' ', $gcsHeaderValue));
 
             $signData .= strtolower($gcsHeaderKey) . ':' . $gcsEncodedHeaderValue . "\n";

@@ -42,16 +42,16 @@ class GatewayTest extends GatewayTestCase
         $this->setMockHttpResponse('payments/000000895910000023670000200001/authorize.200.txt');
 
         $request = $this->gateway->authorize(array(
-            'amount'   => 828.00,
-            'currency' => 'DOP',
-            'token'    => 'e9296584-f278-4eef-920e-6d8cf17a6c60',
-            'clientIp' => '127.0.0.1',
-            'card'     => $this->getValidCard(),
-            'transactionId'=>'f5f59512-aad3-1c44-298',
-            'description'=>'Soft Descriptor',
-            'order'=>array(
-                'customerId'=>888888,
-                'orderId'=>111111,
+            'amount'        => 828.00,
+            'currency'      => 'DOP',
+            'token'         => 'e9296584-f278-4eef-920e-6d8cf17a6c60',
+            'clientIp'      => '127.0.0.1',
+            'card'          => $this->getValidCard(),
+            'transactionId' => 'f5f59512-aad3-1c44-298',
+            'description'   => 'Soft Descriptor',
+            'order'         => array(
+                'customerId' => 888888,
+                'orderId'    => 111111,
             )
         ));
 
@@ -64,11 +64,12 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
-    public function testCapture(){
+    public function testCapture()
+    {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/capture.200.txt');
 
         $request = $this->gateway->capture(array(
-            'transactionReference'=>'000000895910000023670000200001'
+            'transactionReference' => '000000895910000023670000200001'
         ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentCaptureRequest', $request);
@@ -78,11 +79,12 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
-    public function testCaptureCancel(){
+    public function testCaptureCancel()
+    {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/captureCancel.200.txt');
 
         $request = $this->gateway->captureCancel(array(
-            'transactionReference'=>'000000895910000023670000200001'
+            'transactionReference' => '000000895910000023670000200001'
         ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentCaptureCancelRequest', $request);
@@ -92,11 +94,12 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
-    public function testTokenize(){
+    public function testTokenize()
+    {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/tokenize.200.txt');
 
         $request = $this->gateway->tokenize(array(
-            'transactionReference'=>'000000895910000023670000200001'
+            'transactionReference' => '000000895910000023670000200001'
         ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentTokenizeRequest', $request);
@@ -106,11 +109,12 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
-    public function testVoid(){
+    public function testVoid()
+    {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/cancel.200.txt');
 
         $request = $this->gateway->void(array(
-            'transactionReference'=>'000000895910000023670000200001'
+            'transactionReference' => '000000895910000023670000200001'
         ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentVoidRequest', $request);
@@ -120,13 +124,14 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
-    public function testRefund(){
+    public function testRefund()
+    {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/refund.200.txt');
 
         $request = $this->gateway->refund(array(
-            'transactionReference'=>'000000895910000023670000200001',
-            'amount'=>200.00,
-            'card'     => $this->getValidCard()
+            'transactionReference' => '000000895910000023670000200001',
+            'amount'               => 200.00,
+            'card'                 => $this->getValidCard()
         ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentRefundRequest', $request);
@@ -139,27 +144,27 @@ class GatewayTest extends GatewayTestCase
     public function getValidCard()
     {
         return array(
-            'firstName' => 'Example',
-            'lastName' => 'User',
-            'number' => '4111111111111111',
-            'expiryMonth' => rand(1, 12),
-            'expiryYear' => gmdate('Y') + rand(1, 5),
-            'cvv' => rand(100, 999),
-            'billingAddress1' => '123 Billing St',
-            'billingAddress2' => 'Billsville',
-            'billingCity' => 'Billstown',
-            'billingPostcode' => '12345',
-            'billingState' => 'CA',
-            'billingCountry' => 'US',
-            'billingPhone' => '(555) 123-4567',
+            'firstName'        => 'Example',
+            'lastName'         => 'User',
+            'number'           => '4111111111111111',
+            'expiryMonth'      => rand(1, 12),
+            'expiryYear'       => gmdate('Y') + rand(1, 5),
+            'cvv'              => rand(100, 999),
+            'billingAddress1'  => '123 Billing St',
+            'billingAddress2'  => 'Billsville',
+            'billingCity'      => 'Billstown',
+            'billingPostcode'  => '12345',
+            'billingState'     => 'CA',
+            'billingCountry'   => 'US',
+            'billingPhone'     => '(555) 123-4567',
             'shippingAddress1' => '123 Shipping St',
             'shippingAddress2' => 'Shipsville',
-            'shippingCity' => 'Shipstown',
+            'shippingCity'     => 'Shipstown',
             'shippingPostcode' => '54321',
-            'shippingState' => 'NY',
-            'shippingCountry' => 'US',
-            'shippingPhone' => '(555) 987-6543',
-            'email' => 'test@me.com',
+            'shippingState'    => 'NY',
+            'shippingCountry'  => 'US',
+            'shippingPhone'    => '(555) 987-6543',
+            'email'            => 'test@me.com',
         );
     }
 

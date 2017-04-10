@@ -13,6 +13,6 @@ class PaymentVoidRequest extends AbstractPaymentReferenceRequest
 {
     public function getEndPoint()
     {
-        return $this->buildUrl('/payments/{paymentId}/cancel', array('{paymentId}'=>$this->getTransactionReference()));
+        return $this->buildUrl('/payments/{paymentId}/cancel', array('{paymentId}' => $this->getTransactionReference()));
     }
 }

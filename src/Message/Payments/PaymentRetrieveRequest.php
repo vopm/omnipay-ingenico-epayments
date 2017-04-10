@@ -9,8 +9,9 @@ class PaymentRetrieveRequest extends AbstractPaymentReferenceRequest
 //        '200'=>'Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveResponse'
 //    ];
 
-    public function getEndPoint(){
-        return $this->buildUrl('/payments/{paymentId}', array('{paymentId}'=>$this->getTransactionReference()));
+    public function getEndPoint()
+    {
+        return $this->buildUrl('/payments/{paymentId}', array('{paymentId}' => $this->getTransactionReference()));
     }
 
     public function getHttpMethod()
