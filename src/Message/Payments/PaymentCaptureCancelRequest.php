@@ -7,6 +7,6 @@ class PaymentCaptureCancelRequest extends AbstractPaymentReferenceRequest
 {
     public function getEndPoint()
     {
-        return $this->buildUrl('/payments/{paymentId}/cancelapproval', ['{paymentId}'=>$this->getTransactionReference()]);
+        return $this->buildUrl('/payments/{paymentId}/cancelapproval', array('{paymentId}'=>$this->getTransactionReference()));
     }
 }

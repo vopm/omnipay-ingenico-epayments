@@ -2,9 +2,7 @@
 
 **Ingenico ePayments driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/thephpleague/omnipay-stripe.png?branch=master)](https://travis-ci.org/thephpleague/omnipay-stripe)
-[![Latest Stable Version](https://poser.pugx.org/omnipay/stripe/version.png)](https://packagist.org/packages/omnipay/stripe)
-[![Total Downloads](https://poser.pugx.org/omnipay/stripe/d/total.png)](https://packagist.org/packages/omnipay/stripe)
+[![Build Status](https://travis-ci.org/vopm/omnipay-ingenico-epayments.png?branch=master)](https://travis-ci.org/vopm/omnipay-ingenico-epayments)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Stripe support for Omnipay.
@@ -17,7 +15,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "vopm/ingenico-epayments": "~2.0"
+        "vopm/omnipay-ingenico-epayments": "~2.0"
     }
 }
 ```

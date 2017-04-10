@@ -10,7 +10,6 @@ use DateTime;
 use Guzzle\Common\Event;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveResponse;
 use stdClass;
 
 /**
@@ -34,8 +33,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     const MIME_APPLICATION_JSON = 'application/json';
 
-    public $responseCodeClassMap = [
-    ];
+    public $responseCodeClassMap = array();
 
     public $defaultResponseClass = 'Omnipay\GlobalCollect\Message\Response';
     public $defaultErrorResponseClass = 'Omnipay\GlobalCollect\Message\ErrorResponse';
@@ -53,9 +51,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected $preProductionEndpoint = 'https://api-preprod.globalcollect.com';
     protected $clientMetaInfo;
 
-    public function buildUrl($path, $context = [])
+    public function buildUrl($path, $context = array())
     {
-        return strtr('/{apiVersion}/{merchantId}', ['{apiVersion}' => $this->getApiVersion(), '{merchantId}' => $this->getApiMerchantId()]) . strtr($path, $context);
+        return strtr('/{apiVersion}/{merchantId}', array('{apiVersion}' => $this->getApiVersion(), '{merchantId}' => $this->getApiMerchantId())) . strtr($path, $context);
     }
 
     public function getApiMerchantId()
@@ -134,10 +132,10 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     protected function getAmountOfMoney(){
-        return [
-            'amount' => (int)$this->getAmount()*100 ,
+        return array(
+            'amount' => $this->getAmountInteger(),
             'currencyCode' => $this->getCurrency(),
-        ];
+        );
     }
 
     /**
@@ -173,7 +171,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getCardTypes()
     {
-        return [
+        return array(
             CreditCard::BRAND_VISA        => 1,
             CreditCard::BRAND_AMEX        => 2,
             CreditCard::BRAND_MASTERCARD  => 3,
@@ -181,12 +179,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             CreditCard::BRAND_JCB         => 125,
             CreditCard::BRAND_DISCOVER    => 128,
             CreditCard::BRAND_DINERS_CLUB => 132,
-        ];
+        );
     }
 
     public function getCardTypesReverse()
     {
-        return [
+        return array(
             1   => CreditCard::BRAND_VISA, // credit
             114 => CreditCard::BRAND_VISA, //debit
             2   => CreditCard::BRAND_AMEX,
@@ -196,7 +194,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             125 => CreditCard::BRAND_JCB,
             128 => CreditCard::BRAND_DISCOVER,
             132 => CreditCard::BRAND_DINERS_CLUB,
-        ];
+        );
     }
 
 
@@ -211,7 +209,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->buildResponse($httpRequest->send());
     }
 
-    protected function createRequest($method, $uri, $data = null, $headers = [])
+    protected function createRequest($method, $uri, $data = null, $headers = array())
     {
         $this->httpClient->getEventDispatcher()->addListener('request.error', function (Event $event) {
             /**
@@ -238,7 +236,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * @param \Guzzle\Http\Message\Response $httpResponse
      *
-     * @return PaymentRetrieveResponse
+     * @return Response
      * @throws InvalidResponseException
      */
     protected function buildResponse($httpResponse)
@@ -268,13 +266,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
 
     /**
-     * @return string[]
+     * @return mixed
      */
     public function generateRequestHeaders()
     {
         $contentType = static::MIME_APPLICATION_JSON;
         $rfc2616Date = $this->getRfc161Date();
-        $requestHeaders = [];
+        $requestHeaders = array();
         $requestHeaders['Content-Type'] = $contentType;
         $requestHeaders['Date'] = $rfc2616Date;
         if ($this->getClientMetaInfo()) {
@@ -317,7 +315,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @param string[] $requestHeaders
+     * @param mixed $requestHeaders
      *
      * @return string
      */
@@ -337,7 +335,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * @param string[] $requestHeaders
+     * @param mixed $requestHeaders
      *
      * @return string
      */
@@ -354,7 +352,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         } else {
             $signData .= "\n";
         }
-        $gcsHeaders = [];
+        $gcsHeaders = array();
         foreach ($requestHeaders as $headerKey => $headerValue) {
             if (preg_match('/X-GCS/i', $headerKey)) {
                 $gcsHeaders[$headerKey] = $headerValue;

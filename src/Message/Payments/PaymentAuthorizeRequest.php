@@ -18,23 +18,23 @@ class PaymentAuthorizeRequest extends AbstractRequest
 
     public function getData()
     {
-        $request = [
+        $request = array(
             'order' => $this->createOrder()
-        ];
+        );
 
         $request['fraudFields'] = $this->createFraudFields();
 
         if ($this->getToken()) {
-            $request['cardPaymentMethodSpecificInput'] = [
+            $request['cardPaymentMethodSpecificInput'] = array(
                 'card'                              => new \stdClass(),
                 'isRecurring'                       => true,
                 'recurringPaymentSequenceIndicator' => "recurring",
                 'token'                             => $this->getToken(),
-            ];
+            );
         } else {
-            $request['cardPaymentMethodSpecificInput'] = [
+            $request['cardPaymentMethodSpecificInput'] = array(
                 'card' => new \stdClass()
-            ];
+            );
         }
 
         return $request;
@@ -46,38 +46,38 @@ class PaymentAuthorizeRequest extends AbstractRequest
         $card = $this->getCard();
         $order = $this->getOrder();
 
-        $customer = [
-            'billingAddress'      => [
+        $customer = array(
+            'billingAddress'      => array(
                 'city'        => $card->getBillingCity(),
                 'countryCode' => $card->getBillingCountry(),
                 'state'       => $card->getBillingState(),
                 'street'      => $card->getBillingAddress1(),
-            ],
-            'contactDetails'      => [
+            ),
+            'contactDetails'      => array(
                 'phoneNumber'      => $card->getPhone(),
                 'emailAddress'     => $card->getEmail(),
                 'emailMessageType' => 'html',
-            ],
-            'personalInformation' => [
-                'name' => [
+            ),
+            'personalInformation' => array(
+                'name' => array(
                     'firstName' => $card->getFirstName(),
                     'surname'   => $card->getLastName(),
-                ]
-            ],
+                )
+            ),
             "locale"              => $this->getLocale(),
             "merchantCustomerId"  => $order['customerId']
-        ];
+        );
 
         return $customer;
     }
 
     protected function createOrder()
     {
-        $order = [
+        $order = array(
             'amountOfMoney' => $this->getAmountOfMoney(),
             'customer'      => $this->createCustomer(),
             'references'    => $this->createReferences(),
-        ];
+        );
 
         return $order;
 
@@ -86,7 +86,7 @@ class PaymentAuthorizeRequest extends AbstractRequest
 
     protected function createReferences()
     {
-        $value = [];
+        $value = array();
 
         $order = $this->getOrder();
 
@@ -99,9 +99,9 @@ class PaymentAuthorizeRequest extends AbstractRequest
 
     protected function createFraudFields()
     {
-        $value = [
+        $value = array(
             'customerIpAddress' => $this->getClientIp(),
-            'userData'          => [
+            'userData'          => array(
                 0  => '',
                 1  => '',
                 2  => '',
@@ -118,8 +118,8 @@ class PaymentAuthorizeRequest extends AbstractRequest
                 13 => '',
                 14 => '',
                 15 => ''
-            ]
-        ];
+            )
+        );
 
         return $value;
     }

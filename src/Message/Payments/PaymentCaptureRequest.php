@@ -8,7 +8,7 @@ class PaymentCaptureRequest extends AbstractPaymentReferenceRequest
 
     public function getEndPoint()
     {
-        return $this->buildUrl('/payments/{paymentId}/approve', ['{paymentId}'=>$this->getTransactionReference()]);
+        return $this->buildUrl('/payments/{paymentId}/approve', array('{paymentId}'=>$this->getTransactionReference()));
     }
 
     public function getData()
@@ -16,9 +16,9 @@ class PaymentCaptureRequest extends AbstractPaymentReferenceRequest
         $request = new \stdClass();
 
         if ($this->getAmountInteger()){
-            $request = [
+            $request = array(
                 'amount'=>$this->getAmountInteger()
-            ];
+            );
         }
 
         return $request;

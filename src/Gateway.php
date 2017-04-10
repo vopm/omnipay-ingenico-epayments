@@ -27,16 +27,15 @@ class Gateway extends AbstractGateway
      */
     public function getDefaultParameters()
     {
-        return [
+        return array(
             'testMode'      => false,
             'apiMerchantId' => '',
             'apiKeyId'      => '',
             'apiSecret'     => '',
             'apiVersion'    => 'v1',
-            'apiIntegrator'    => null,
-        ];
+            'apiIntegrator' => null,
+        );
     }
-
 
 
     public function authorize(array $parameters = array())
@@ -54,7 +53,7 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureCancelRequest', $parameters);
     }
 
-    public function fetchTransaction(array $parameters = [])
+    public function fetchTransaction(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest', $parameters);
     }

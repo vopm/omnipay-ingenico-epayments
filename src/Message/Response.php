@@ -107,7 +107,7 @@ class Response extends AbstractResponse
      * @return ErrorItem[]
      */
     public function getErrors(){
-        $errors = [];
+        $errors = array();
         foreach ($this->data['errors'] as $e){
             $errors[] = ErrorItem::fromError($e);
         }

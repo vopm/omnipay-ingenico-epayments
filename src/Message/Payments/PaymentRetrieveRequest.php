@@ -10,7 +10,7 @@ class PaymentRetrieveRequest extends AbstractPaymentReferenceRequest
 //    ];
 
     public function getEndPoint(){
-        return $this->buildUrl('/payments/{paymentId}', ['{paymentId}'=>$this->getTransactionReference()]);
+        return $this->buildUrl('/payments/{paymentId}', array('{paymentId}'=>$this->getTransactionReference()));
     }
 
     public function getHttpMethod()
@@ -29,6 +29,6 @@ class PaymentRetrieveRequest extends AbstractPaymentReferenceRequest
     {
         $this->validate('transactionReference');
 
-        return [];
+        return array();
     }
 }

@@ -26,7 +26,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/retrieve.200.txt');
 
-        $request = $this->gateway->fetchTransaction(['transactionReference' => '000000895910000023670000200001']);
+        $request = $this->gateway->fetchTransaction(array('transactionReference' => '000000895910000023670000200001'));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest', $request);
 
@@ -41,7 +41,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/authorize.200.txt');
 
-        $request = $this->gateway->authorize([
+        $request = $this->gateway->authorize(array(
             'amount'   => 828.00,
             'currency' => 'DOP',
             'token'    => 'e9296584-f278-4eef-920e-6d8cf17a6c60',
@@ -49,11 +49,11 @@ class GatewayTest extends GatewayTestCase
             'card'     => $this->getValidCard(),
             'transactionId'=>'f5f59512-aad3-1c44-298',
             'description'=>'Soft Descriptor',
-            'order'=>[
+            'order'=>array(
                 'customerId'=>888888,
                 'orderId'=>111111,
-            ]
-        ]);
+            )
+        ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentAuthorizeRequest', $request);
 
@@ -67,9 +67,9 @@ class GatewayTest extends GatewayTestCase
     public function testCapture(){
         $this->setMockHttpResponse('payments/000000895910000023670000200001/capture.200.txt');
 
-        $request = $this->gateway->capture([
+        $request = $this->gateway->capture(array(
             'transactionReference'=>'000000895910000023670000200001'
-        ]);
+        ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentCaptureRequest', $request);
 
@@ -81,9 +81,9 @@ class GatewayTest extends GatewayTestCase
     public function testCaptureCancel(){
         $this->setMockHttpResponse('payments/000000895910000023670000200001/captureCancel.200.txt');
 
-        $request = $this->gateway->captureCancel([
+        $request = $this->gateway->captureCancel(array(
             'transactionReference'=>'000000895910000023670000200001'
-        ]);
+        ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentCaptureCancelRequest', $request);
 
@@ -95,9 +95,9 @@ class GatewayTest extends GatewayTestCase
     public function testTokenize(){
         $this->setMockHttpResponse('payments/000000895910000023670000200001/tokenize.200.txt');
 
-        $request = $this->gateway->tokenize([
+        $request = $this->gateway->tokenize(array(
             'transactionReference'=>'000000895910000023670000200001'
-        ]);
+        ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentTokenizeRequest', $request);
 
@@ -109,9 +109,9 @@ class GatewayTest extends GatewayTestCase
     public function testVoid(){
         $this->setMockHttpResponse('payments/000000895910000023670000200001/cancel.200.txt');
 
-        $request = $this->gateway->void([
+        $request = $this->gateway->void(array(
             'transactionReference'=>'000000895910000023670000200001'
-        ]);
+        ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentVoidRequest', $request);
 
@@ -123,11 +123,11 @@ class GatewayTest extends GatewayTestCase
     public function testRefund(){
         $this->setMockHttpResponse('payments/000000895910000023670000200001/refund.200.txt');
 
-        $request = $this->gateway->refund([
+        $request = $this->gateway->refund(array(
             'transactionReference'=>'000000895910000023670000200001',
             'amount'=>200.00,
             'card'     => $this->getValidCard()
-        ]);
+        ));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentRefundRequest', $request);
 
