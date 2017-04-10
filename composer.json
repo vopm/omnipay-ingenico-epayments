@@ -1,7 +1,7 @@
 {
-  "name": "vopm/omnipay-globalcollect",
+  "name": "vopm/omnipay-ingenico-epayments",
   "type": "library",
-  "description": "GlobaCollect driver for the Omnipay payment processing library",
+  "description": "Ingenico ePayments driver for the Omnipay payment processing library",
   "keywords": [
     "gateway",
     "merchant",
@@ -10,7 +10,7 @@
     "payment",
     "globalcollect"
   ],
-  "homepage": "https://github.com/vopm/omnipay-globalcollect",
+  "homepage": "https://github.com/vopm/omnipay-ingenico-epayments",
   "license": "MIT",
   "authors": [
     {
