@@ -315,7 +315,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         }
 
         // the sdkIdentifier contains a /. Without the JSON_UNESCAPED_SLASHES, this is turned to \/ in JSON.
-        return base64_encode(json_encode($serverMetaInfo, JSON_UNESCAPED_SLASHES));
+        return base64_encode(json_encode($serverMetaInfo, defined('JSON_UNESCAPED_SLASHES')?JSON_UNESCAPED_SLASHES:64));
     }
 
     /**
