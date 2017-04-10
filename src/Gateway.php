@@ -40,42 +40,66 @@ class Gateway extends AbstractGateway
 
     public function authorize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentAuthorizeRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentAuthorizeRequest',
+            $parameters
+        );
     }
 
     public function capture(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureRequest',
+            $parameters
+        );
     }
 
     public function captureCancel(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureCancelRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentCaptureCancelRequest',
+            $parameters
+        );
     }
 
     public function fetchTransaction(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest',
+            $parameters
+        );
     }
 
     public function tokenize(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentTokenizeRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentTokenizeRequest',
+            $parameters
+        );
     }
 
     public function void(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentVoidRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentVoidRequest',
+            $parameters
+        );
     }
 
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentRefundRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentRefundRequest',
+            $parameters
+        );
     }
 
     public function approvePending(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\GlobalCollect\Message\Payments\PaymentPendingApproveRequest', $parameters);
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\Payments\PaymentPendingApproveRequest',
+            $parameters
+        );
     }
 
 
