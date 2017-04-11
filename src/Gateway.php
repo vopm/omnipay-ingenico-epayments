@@ -102,6 +102,14 @@ class Gateway extends AbstractGateway
         );
     }
 
+    public function test(array $parameters = array())
+    {
+        return $this->createRequest(
+            '\Omnipay\GlobalCollect\Message\TestConnectionRequest',
+            $parameters
+        );
+    }
+
 
     /** parameters */
     public function getApiMerchantId()

@@ -141,6 +141,20 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
     }
 
+
+    public function testConnection()
+    {
+        $this->setMockHttpResponse('testconnection.200.txt');
+
+        $request = $this->gateway->test();
+
+        $this->assertInstanceOf('Omnipay\GlobalCollect\Message\TestConnectionRequest', $request);
+
+        $response = $request->send();
+
+        $this->assertTrue($response->isSuccessful());
+    }
+
     public function getValidCard()
     {
         return array(
