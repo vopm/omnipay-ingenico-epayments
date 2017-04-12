@@ -226,11 +226,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             }
         });
 
+        $data = (null !== $data)?json_encode($data):null;
+
         $httpRequest = $this->httpClient->createRequest(
             $method,
             $uri,
             array_merge($this->generateRequestHeaders(), $headers),
-            json_encode($data)
+            $data
         );
 
         return $httpRequest;

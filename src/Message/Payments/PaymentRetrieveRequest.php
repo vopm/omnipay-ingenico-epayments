@@ -32,6 +32,6 @@ class PaymentRetrieveRequest extends AbstractPaymentReferenceRequest
     {
         $this->validate('transactionReference');
 
-        return array();
+        return null;
     }
 }
