@@ -88,6 +88,22 @@ class Response extends AbstractResponse
         return null;
     }
 
+    public function getTransactionId()
+    {
+        if ($this->isSuccessful()) {
+            if (isset($this->data['paymentOutput']) && isset($this->data['paymentOutput']['references'])) {
+                return $this->data['paymentOutput']['references']['merchantReference'];
+            } elseif (isset($this->data['refundOutput']) && isset($this->data['refundOutput']['references'])) {
+                return $this->data['refundOutput']['references']['merchantReference'];
+            }elseif (isset($this->data['payment']['paymentOutput']) && isset($this->data['payment']['paymentOutput']['references'])) {
+                return $this->data['payment']['paymentOutput']['references']['merchantReference'];
+            }if (isset($this->data['order']) && isset($this->data['order']['references'])) {
+                return $this->data['order']['references']['merchantReference'];
+            }
+        }
+
+        return null;
+    }
 
     public function getToken()
     {
