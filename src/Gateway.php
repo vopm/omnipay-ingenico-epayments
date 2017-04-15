@@ -62,7 +62,7 @@ class Gateway extends AbstractGateway
         );
     }
 
-    public function fetchTransaction(array $parameters = array())
+    public function retrieve(array $parameters = array())
     {
         return $this->createRequest(
             '\Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest',

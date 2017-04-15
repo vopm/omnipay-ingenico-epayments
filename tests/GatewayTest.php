@@ -26,7 +26,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('payments/000000895910000023670000200001/retrieve.200.txt');
 
-        $request = $this->gateway->fetchTransaction(array('transactionReference' => '000000895910000023670000200001'));
+        $request = $this->gateway->retrieve(array('transactionReference' => '000000895910000023670000200001'));
 
         $this->assertInstanceOf('Omnipay\GlobalCollect\Message\Payments\PaymentRetrieveRequest', $request);
 
