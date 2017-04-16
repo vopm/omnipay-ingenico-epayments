@@ -127,7 +127,8 @@ class Response extends AbstractResponse
         return null;
     }
 
-    public function getStatus(){
+    public function getStatus()
+    {
         if (isset($this->data['status'])) {
             return $this->data['status'];
         }
