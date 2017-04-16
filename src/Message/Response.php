@@ -95,9 +95,13 @@ class Response extends AbstractResponse
                 return $this->data['paymentOutput']['references']['merchantReference'];
             } elseif (isset($this->data['refundOutput']) && isset($this->data['refundOutput']['references'])) {
                 return $this->data['refundOutput']['references']['merchantReference'];
-            }elseif (isset($this->data['payment']['paymentOutput']) && isset($this->data['payment']['paymentOutput']['references'])) {
+            } elseif (
+                isset($this->data['payment']['paymentOutput']) &&
+                isset($this->data['payment']['paymentOutput']['references'])
+            ) {
                 return $this->data['payment']['paymentOutput']['references']['merchantReference'];
-            }if (isset($this->data['order']) && isset($this->data['order']['references'])) {
+            }
+            if (isset($this->data['order']) && isset($this->data['order']['references'])) {
                 return $this->data['order']['references']['merchantReference'];
             }
         }
